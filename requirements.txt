@@ -1,0 +1,7 @@
+langchain
+langchainhub
+langchain-openai
+langchain_community
+langchain_chroma
+pypdf
+streamlit
