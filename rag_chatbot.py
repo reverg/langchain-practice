@@ -59,7 +59,7 @@ def serve(chain):
 
 if __name__ == "__main__":
     llm = ChatOpenAI(model="gpt-3.5-turbo-0125")
-    retriever = get_retriever_from_pdf("./sample.pdf")
+    retriever = get_retriever_from_pdf("./docs.pdf")
     prompt = hub.pull("rlm/rag-prompt")
     chain = build_chain(llm, retriever, prompt)
     serve(chain)
