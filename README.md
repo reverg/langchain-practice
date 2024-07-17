@@ -6,7 +6,7 @@ A simple RAG chatbot that responds based on the contents of a PDF file.
 #### Requirements
 * [OpenAI API key](https://platform.openai.com/api-keys)
 * PDF file containing your data
-  * Rename it as `sample.pdf` or change `rag_chatbot.py` line 62
+  * Rename it as `docs.pdf` or change `rag_chatbot.py` line 62
   * Place in the same directory as `rag_chatbot.py`
 
 #### Local environment
