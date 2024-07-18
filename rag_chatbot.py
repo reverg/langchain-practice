@@ -8,6 +8,7 @@ from langchain_chroma import Chroma
 from langchain_community.document_loaders import PyPDFLoader
 
 
+@st.cache_resource
 def get_retriever_from_pdf(file_path):
     loader = PyPDFLoader(file_path)
     docs = loader.load()
@@ -20,14 +21,15 @@ def get_retriever_from_pdf(file_path):
     return retriever
 
 
-def build_chain(llm, retriever, prompt):
+@st.cache_resource
+def build_chain(_llm, _retriever, _prompt):
     chain = (
         {
-            "context": retriever,
+            "context": _retriever,
             "question": RunnablePassthrough(),
         }
-        | prompt
-        | llm
+        | _prompt
+        | _llm
         | StrOutputParser()
     )
 
@@ -46,14 +48,14 @@ def serve(chain):
 
     if question := st.chat_input():
         st.chat_message("user").write(question)
+        req_log = {"role": "user", "content": question}
+        st.session_state.logs.append(req_log)
+
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 answer = chain.invoke(question)
                 st.write(answer)
-
-        req_log = {"role": "user", "content": question}
         res_log = {"role": "assistant", "content": answer}
-        st.session_state.logs.append(req_log)
         st.session_state.logs.append(res_log)
 
 
